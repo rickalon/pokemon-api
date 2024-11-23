@@ -24,7 +24,9 @@ services:
     image: pokemon-api
     restart: always
     ports:
-      -8080:8080
+      - 8080:8080
+    depends_on:
+      - mongo
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example

@@ -1,7 +1,7 @@
-FROM 1.23.3-nanoserver-1809 AS build
+FROM golang:1.23.1-bookworm AS build
 WORKDIR /app
 COPY . .
-RUN go mod donwload
+RUN go mod download
 RUN CGO_ENABLED=0 GOOS=linux go build -o api ./cmd/api.go
 
 FROM scratch AS run
