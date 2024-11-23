@@ -1,5 +1,7 @@
 package settings
 
+import "fmt"
+
 type Config struct {
 	Addr string
 }
@@ -23,4 +25,9 @@ func ConfigAddr(addr string) fnConfig {
 	return func(cfg *Config) {
 		cfg.Addr = addr
 	}
+}
+
+// String
+func (cfg *Config) String() string {
+	return fmt.Sprintf("Full connection address(%s)", cfg.Addr)
 }
