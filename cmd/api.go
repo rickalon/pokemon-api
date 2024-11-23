@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bayau/db"
 	"bayau/server"
 	"bayau/settings"
 )
@@ -8,5 +9,6 @@ import (
 func main() {
 	cfg := settings.NewConfig(settings.ConfigAddr(":8080"))
 	srv := server.NewDefaultServer()
-	server.Run(srv, cfg)
+	db := db.NewMongoDB()
+	server.Run(srv, cfg, db)
 }
