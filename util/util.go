@@ -6,13 +6,9 @@ import (
 	"net/http"
 )
 
-type ErrorMsg struct {
-	erroMsg string `json:"error"`
-}
-
 func WriteJsonError(w http.ResponseWriter, err error) {
 	w.WriteHeader(500)
-	json.NewEncoder(w).Encode(&ErrorMsg{err.Error()})
+	json.NewEncoder(w).Encode(&data.ErrorMsg{err.Error()})
 }
 
 func WriteJsonPokemon(w http.ResponseWriter, pokemons []*data.Pokemon) {
