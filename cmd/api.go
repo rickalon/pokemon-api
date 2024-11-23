@@ -1,8 +1,12 @@
 package main
 
-import "bayau/server"
+import (
+	"bayau/server"
+	"bayau/settings"
+)
 
 func main() {
-
-	server.Run(":8080")
+	cfg := settings.NewConfig(settings.ConfigAddr(":8080"))
+	srv := server.NewDefaultServer()
+	server.Run(srv, cfg)
 }
