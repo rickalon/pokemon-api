@@ -5,6 +5,7 @@ import (
 	"bayau/util"
 	"encoding/json"
 	"io"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -14,12 +15,11 @@ var POKEMONS_REQUESTED = 10
 
 func PokemonHandler(w http.ResponseWriter, r *http.Request) {
 
-	mapPokemon := util.RandomPokemons(POKEMONS_REQUESTED)
+	mapRandomPokemon := util.RandomPokemons(POKEMONS_REQUESTED)
+	pokemons := make([]*data.Pokemon, POKEMONS_REQUESTED)
 
-	response := make([][]interface{}, POKEMONS_REQUESTED)
-	iterator := 0
-	for i := range mapPokemon {
-		url := "https://pokeapi.co/api/v2/pokemon/" + strconv.Itoa(i)
+	for number, it := range mapRandomPokemon {
+		url := "https://pokeapi.co/api/v2/pokemon/" + strconv.Itoa(number)
 		resp, err := http.Get(url)
 		if err != nil {
 			util.WriteJsonError(w, err)
@@ -31,14 +31,12 @@ func PokemonHandler(w http.ResponseWriter, r *http.Request) {
 			util.WriteJsonError(w, err)
 			return
 		}
-		pokemon := data.NewPokemon()
-		err = json.Unmarshal(body, pokemon)
+		err = json.Unmarshal(body, &pokemons[it])
 		if err != nil {
 			util.WriteJsonError(w, err)
 			return
 		}
-		response[iterator] = []interface{}{pokemon.Name, pokemon.Weight, pokemon.Sprite.ImageURL}
-		iterator++
 	}
-	util.WriteJsonPokemonArray(w, response)
+	log.Println(pokemons)
+	//util.WriteJsonPokemonArray(w, response)
 }

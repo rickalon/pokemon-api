@@ -9,7 +9,3 @@ type Pokemon struct {
 type Sprites struct {
 	ImageURL string `json:"front_default"`
 }
-
-func NewPokemon() *Pokemon {
-	return &Pokemon{}
-}
