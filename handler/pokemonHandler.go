@@ -24,7 +24,7 @@ func PokemonHandler(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Millisecond*200)
 	defer cancel()
 	start := time.Now()
-	log.Println("Starting to fetch de pokemons ")
+	log.Println("Starting to fetch de pokemons...")
 
 	for number := range mapRandomPokemon {
 		go func() {
@@ -65,5 +65,5 @@ func PokemonHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	cancel() //this is secure
 	log.Println("Pokemons fetched in", time.Since(start))
-	util.WriteJsonPokemonArray(w, pokemons)
+	util.WriteJsonPokemon(util.RESULT_OBJECT, w, pokemons)
 }
